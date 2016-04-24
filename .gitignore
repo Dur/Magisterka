@@ -1,2 +1,7 @@
 .project
 target
+RemoteSystemsTempFiles
+Servers
+.recommenders
+.metadata
+.metadata/*.*
