@@ -1,0 +1,4 @@
+#Tomcat publish data
+#Sun Apr 24 15:54:14 CEST 2016
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\ddr\\.m2\\repository\\org\\apache\\tomcat\\embed\\tomcat-embed-websocket\\7.0.54\\tomcat-embed-websocket-7.0.54.jar=WEB-INF/lib/tomcat-embed-websocket-7.0.54.jar
+org.eclipse.jst.jee.server\:/binary\:C\:\\Users\\ddr\\.m2\\repository\\org\\springframework\\spring-web\\4.0.5.RELEASE\\spring-web-4.0.5.RELEASE.jar=WEB-INF/lib/spring-web-4.0.5.RELEASE.jar

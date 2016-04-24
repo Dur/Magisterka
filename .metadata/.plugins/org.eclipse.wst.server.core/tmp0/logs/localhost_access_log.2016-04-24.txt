@@ -1,0 +1,16 @@
+127.0.0.1 - - [24/Apr/2016:15:54:18 +0200] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:15:54:19 +0200] "GET /ServerSide/ HTTP/1.1" 404 973
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:15:54:25 +0200] "GET /ServerSide/hello HTTP/1.1" 404 983
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:15:55:21 +0200] "GET /ServerSide/rest/hello HTTP/1.1" 404 993
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:04:39 +0200] "GET /ServerSide/jsp/welcome HTTP/1.1" 404 995
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:05:52 +0200] "GET /ServerSide/jsp HTTP/1.1" 404 979
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:05:57 +0200] "GET /ServerSide/jsp HTTP/1.1" 404 979
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:07:17 +0200] "GET /jsp HTTP/1.1" 404 957
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:07:33 +0200] "GET /ServerSide/jsp/welcome HTTP/1.1" 404 995
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:07:57 +0200] "GET /ServerSide/rest/hello HTTP/1.1" 404 993
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:08:18 +0200] "GET /ServerSide/rest/hello.json HTTP/1.1" 404 1003
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:09:37 +0200] "GET /ServerSide/http HTTP/1.1" 404 949
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:09:44 +0200] "GET /ServerSide/json HTTP/1.1" 404 981
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:09:51 +0200] "GET /ServerSide/http HTTP/1.1" 404 949
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:10:35 +0200] "GET /ServerSide/http/jsp/welcome HTTP/1.1" 200 1676
+0:0:0:0:0:0:0:1 - - [24/Apr/2016:19:10:52 +0200] "GET /ServerSide/http/rest/hello.json HTTP/1.1" 200 66

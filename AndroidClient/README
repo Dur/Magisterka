@@ -1,0 +1,30 @@
+This directory contains the jar file of the Ensemble8 application, which demonstrates many of the javafx features,
+along with the required scripts to create an Android package based on
+this application.
+
+1. Build the JavaFX Application.
+The Ensemble8.jar can be build from the sources files of the javafx android sdk, if you execute the gradle apps target.
+For your convenience a prebuild jar file is provided in the ensemble directory.
+
+2. Create an Android project based on the JavaFX Application.
+The rootdirectory for this sample contains a script named
+convertJavaFXToAndroid.sh.
+You have to change 1 parameter in this file: 
+ANDROID_SDK should point to the directory where you downloaded the
+android sdk. After changing the parameter, run the convertJavaFXToAndroid.sh script
+
+Note: a Windows version of this script will be added in a later release.
+For now, Windows users should change the script into a .bat file
+
+The result of this step is a directory named android/Ensemble8Android 
+If you try to do this step twice, you will get an error since the 
+directory already exist. Remove the directory and try again.
+
+3. Build the Android package.
+cd into the android/Ensemble8Android directory and run
+ant clean debug
+
+This will create a package Ensemble8Android-debug.apk in the android/Ensemble8Android/bin directory.
+This package can now be transfered to your android device using
+/path/to/ANDROID_SDK/platform-tools/adb install bin/Ensemble8Android-debug.apk
+###############################

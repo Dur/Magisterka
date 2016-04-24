@@ -1,0 +1,4 @@
+ServerSide
+==========
+
+Magisterka - strona serwerowa
