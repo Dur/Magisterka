@@ -1,0 +1,3 @@
+[submodule "StadaloneClient/src/com/dur/shared"]
+	path = StadaloneClient/src/com/dur/shared
+	url = https://github.com/Dur/shared
