@@ -1,0 +1,3 @@
+[submodule "ServerSide/src/main/java/com/dur/ServerSide/src/main/java/com/dur"]
+	path = ServerSide/src/main/java/com/dur/ServerSide/src/main/java/com/dur
+	url = https://github.com/Dur/shared
