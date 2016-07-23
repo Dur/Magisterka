@@ -1,4 +1,4 @@
-package com.dur.shared;
+package com.dur.client.connection;
 
 
 public enum ConnectionType {

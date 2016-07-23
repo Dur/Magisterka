@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.MessageDispatcher;
-import com.dur.shared.ConnectionType;
 
 public abstract class CommunicationChannel implements Comparable<CommunicationChannel> {
 	

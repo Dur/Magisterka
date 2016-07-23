@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import com.dur.client.controllers.AndroidContextController;
 import com.dur.client.model.ApplicationContext;
 import com.dur.client.model.JSONMessage;
-import com.dur.shared.ConnectionType;
 import com.dur.shared.Constants;
 import com.dur.shared.MessageTypes;
 

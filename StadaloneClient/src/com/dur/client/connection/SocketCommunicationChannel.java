@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.model.ApplicationContext;
-import com.dur.shared.ConnectionType;
 
 public class SocketCommunicationChannel extends CommunicationChannel{
 	

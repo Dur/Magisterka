@@ -4,7 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.AndroidContextController;
-import com.dur.shared.ConnectionType;
 
 
 public class SmsCommuniactionChannel extends CommunicationChannel{

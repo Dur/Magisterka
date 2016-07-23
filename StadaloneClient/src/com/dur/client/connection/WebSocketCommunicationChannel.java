@@ -8,8 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.java_websocket.drafts.Draft_17;
 
-import com.dur.shared.ConnectionType;
-
 public class WebSocketCommunicationChannel extends CommunicationChannel implements Runnable{
 	
 	private final Log log = LogFactory.getLog(WebSocketCommunicationChannel.class);

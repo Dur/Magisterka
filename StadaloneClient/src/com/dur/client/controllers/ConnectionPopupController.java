@@ -28,12 +28,12 @@ import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.connection.CommunicationChannel;
 import com.dur.client.connection.CommunicationChannelFactory;
+import com.dur.client.connection.ConnectionType;
 import com.dur.client.model.ApplicationContext;
 import com.dur.client.model.Client;
 import com.dur.client.model.JSONMessage;
 import com.dur.client.view.PrimaryView;
 import com.dur.client.view.decorators.StackPaneDecorator;
-import com.dur.shared.ConnectionType;
 import com.dur.shared.Constants;
 import com.dur.shared.MessageTypes;
 

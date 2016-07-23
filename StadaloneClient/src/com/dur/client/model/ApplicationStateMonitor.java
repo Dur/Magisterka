@@ -10,8 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.ClientManager;
+import com.dur.client.connection.ConnectionType;
 import com.dur.client.controllers.AndroidContextController;
-import com.dur.shared.ConnectionType;
 import com.dur.shared.Constants;
 import com.dur.shared.MessageTypes;
 
