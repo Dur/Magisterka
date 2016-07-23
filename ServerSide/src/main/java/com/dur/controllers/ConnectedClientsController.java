@@ -11,9 +11,9 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.dur.model.ClientSession;
-import com.dur.model.JSONMessage;
-import com.dur.server.shared.Constants;
-import com.dur.server.shared.MessageTypes;
+import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
+import com.dur.shared.MessageTypes;
 
 public class ConnectedClientsController {
 	
@@ -98,13 +98,13 @@ public class ConnectedClientsController {
 			for(ClientSession singleClient  : clients){
 				clientsList.add(singleClient.getState());
 			}
-			HashMap<Object, Object> toSend = new HashMap<Object, Object>();
-			toSend.put(Constants.REQUEST_TYPE.toString(), MessageTypes.CLIENTS_LIST.toString());
+			JSONMessage toSend = new JSONMessage();
+			toSend.addParam(Constants.REQUEST_TYPE, MessageTypes.CLIENTS_LIST.toString());
 			if( ! clients.isEmpty()){
-				toSend.put(MessageTypes.CLIENTS_LIST.toString(), clientsList);
+				toSend.addParam(MessageTypes.CLIENTS_LIST, clientsList);
 			}
-			TextMessage returnMessage = new TextMessage(JSONMessage.toJson(toSend));
-			log.info("##### Sending notification: " + JSONMessage.toJson(toSend) + " to " + client.getId());
+			TextMessage returnMessage = new TextMessage(toSend.toString());
+			log.info("##### Sending notification: " + toSend.toString() + " to " + client.getId());
 			try {
 				ServerController.getClientsController().getSessionFor(client.getId()).sendMessage(returnMessage);
 			} 

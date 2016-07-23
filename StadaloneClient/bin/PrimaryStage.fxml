@@ -10,7 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.web.*?>
 
-<GridPane fx:id="parentPane" prefHeight="546.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.dur.client.controllers.PrimaryWindowController">
+<GridPane fx:id="parentPane" prefHeight="546.0" prefWidth="707.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.dur.client.controllers.PrimaryWindowController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="70.0" />
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="30.0" />

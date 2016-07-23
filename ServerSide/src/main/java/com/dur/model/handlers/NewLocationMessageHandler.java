@@ -1,15 +1,13 @@
 package com.dur.model.handlers;
 
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.dur.controllers.ConnectedClientsController;
-import com.dur.model.JSONMessage;
-import com.dur.server.shared.Constants;
+import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 
 public class NewLocationMessageHandler implements MessageHandler {
 
@@ -22,9 +20,9 @@ public class NewLocationMessageHandler implements MessageHandler {
 	}
 
 	@Override
-	public void handleMessage(Map<Object, Object> message, WebSocketSession sessionID) throws Exception{
-		String receiver = (String) message.get(Constants.RECIPIENT_ID.toString());
-		TextMessage toSend = new TextMessage(JSONMessage.toJson(message));
+	public void handleMessage(JSONMessage message, WebSocketSession sessionID) throws Exception{
+		String receiver = (String) message.get(Constants.RECIPIENT_ID);
+		TextMessage toSend = new TextMessage(message.toString());
 		log.error("##### Getting session for: " + receiver);
 		WebSocketSession session = clientsController.getSessionFor(receiver);
 		if(null != receiver && null != session){

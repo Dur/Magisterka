@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.dur.server.shared.Constants;
+import com.dur.shared.Constants;
 
 
 public class ClientSession {

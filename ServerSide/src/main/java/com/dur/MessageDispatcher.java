@@ -1,22 +1,21 @@
 package com.dur;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.socket.WebSocketSession;
 
 import com.dur.controllers.ConnectedClientsController;
-import com.dur.model.JSONMessage;
 import com.dur.model.handlers.DafaultForwardHandler;
 import com.dur.model.handlers.GetClientsMessageHandler;
 import com.dur.model.handlers.GetLocationMessageHandler;
 import com.dur.model.handlers.MessageHandler;
 import com.dur.model.handlers.NewLocationMessageHandler;
 import com.dur.model.handlers.RegisterMessageHandler;
-import com.dur.server.shared.Constants;
-import com.dur.server.shared.MessageTypes;
+import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
+import com.dur.shared.MessageTypes;
 
 /**
  * Message dispatcher for all possible messages. 
@@ -39,9 +38,9 @@ public class MessageDispatcher {
 	}
 
 	public void dispatch(String message, WebSocketSession session) throws Exception{
-		Map<Object, Object> params = JSONMessage.parseJson(message);
+		JSONMessage params = new JSONMessage(message);
 		log.info("##### Received message: " + message);
-		String requestType = (String) params.get(Constants.REQUEST_TYPE.toString());
+		String requestType = (String) params.get(Constants.REQUEST_TYPE);
 		MessageHandler handler = handlers.get(requestType);
 		if(null != handler){
 			log.info("##### Processing message: " + requestType);
