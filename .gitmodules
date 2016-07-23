@@ -7,3 +7,6 @@
 [submodule "tree/master/StandaloneClient/src/com/dur"]
 	path = tree/master/StandaloneClient/src/com/dur
 	url = https://github.com/Dur/shared
+[submodule "StandaloneClient/src/com/dur"]
+	path = StandaloneClient/src/com/dur
+	url = https://github.com/Dur/shared
