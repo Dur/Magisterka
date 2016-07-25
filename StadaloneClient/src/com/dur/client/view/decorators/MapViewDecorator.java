@@ -1,14 +1,7 @@
 package com.dur.client.view.decorators;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-
-import javafx.event.EventHandler;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,11 +12,17 @@ import com.dur.client.controllers.PrimaryWindowController;
 import com.dur.client.model.ApplicationContext;
 import com.dur.client.model.Client;
 import com.dur.client.model.Cords;
-import com.dur.client.model.JSONMessage;
 import com.dur.client.model.PointF;
 import com.dur.client.view.PrimaryView;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 import com.dur.shared.MessageTypes;
+
+import javafx.event.EventHandler;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 public class MapViewDecorator {
 	
@@ -160,12 +159,12 @@ public class MapViewDecorator {
 		            	log.info("##### Will send " + pointsToSend + " points");
 		            	List<Cords> cordsList = mapController.getCalculator().transformToCords(pointsToSendList);
 		            	//canvasDecorator.drawFromPoints(mapController.getCalculator().transformToPoints(cordsList));
-		            	HashMap<Object, Object> data = new HashMap<>();
-						data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.DRAW_PATH.toString());
-						data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-						data.put(Constants.RECIPIENT_ID.toString(), current.getId());
-						data.put(Constants.PATH.toString(), cordsList);
-						String json = JSONMessage.toJson(data);
+		            	JSONMessage message = new JSONMessage();
+		            	message.addParam(Constants.REQUEST_TYPE, MessageTypes.DRAW_PATH.toString());
+		            	message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+		            	message.addParam(Constants.RECIPIENT_ID, current.getId());
+		            	message.addParam(Constants.PATH, cordsList);
+						String json = message.toString();
 						log.error("##### Sending draw request: " + json);
 						current.sendMessage(json);  
 	            	}

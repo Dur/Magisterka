@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.MessageDispatcher;
-import com.dur.client.model.JSONMessage;
+import com.dur.shared.JSONMessage;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -54,7 +54,7 @@ public class SmsReceiver {
 		                String message = sb.toString();
 		                log.info("##### Received message from " + sender + ": " + message);
 		                try{
-		                	JSONMessage.parseJson(message);
+		                	new JSONMessage(message);
 		                	log.info("##### Message is valid for application. Processing...");
 		                	MessageDispatcher.dispatch(message);
 		                	log.info("##### Message processed");

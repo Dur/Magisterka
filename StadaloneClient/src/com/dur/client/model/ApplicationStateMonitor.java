@@ -1,6 +1,5 @@
 package com.dur.client.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +12,7 @@ import com.dur.client.ClientManager;
 import com.dur.client.connection.ConnectionType;
 import com.dur.client.controllers.AndroidContextController;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 import com.dur.shared.MessageTypes;
 
 public class ApplicationStateMonitor implements Runnable{
@@ -65,39 +65,39 @@ public class ApplicationStateMonitor implements Runnable{
 	private void removeChannels(List<ConnectionType> toRemove){
 		for(ConnectionType type : toRemove){
 			log.info("##### Removeing " + type.toString());
-			HashMap<Object, Object> data = new HashMap<>();
-			data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-			data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.CHANNEL_OFF.toString());
-			data.put(Constants.CHANNEL.toString(), type.toString());
+			JSONMessage message = new JSONMessage();
+			message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+			message.addParam(Constants.REQUEST_TYPE, MessageTypes.CHANNEL_OFF.toString());
+			message.addParam(Constants.CHANNEL, type.toString());
 			for(Client client : ClientManager.getClientsList()){
-				client.sendMessage(JSONMessage.toJson(data));
+				client.sendMessage(message.toString());
 			}
 		}
 	}
 	
 	private void addChannels(List<ConnectionType> toAdd){
-		HashMap<Object, Object> data = new HashMap<>();
-		data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-		data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.CHANNEL_ON.toString());
+		JSONMessage message = new JSONMessage();
+		message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+		message.addParam(Constants.REQUEST_TYPE, MessageTypes.CHANNEL_ON.toString());
 		for(ConnectionType type : toAdd){
 			if(type == ConnectionType.PHONE){
 				log.info("##### Adding PHONE connection type");
-				data.put(Constants.CLIENT_PHONE.toString(), AndroidContextController.getCurrentDevicePhoneNumber());
+				message.addParam(Constants.CLIENT_PHONE, AndroidContextController.getCurrentDevicePhoneNumber());
 			}
 			if(type == ConnectionType.SOCKET){
 				log.info("##### Adding SOCKET connection type");
 				String ipAddress = ApplicationContext.getIPAddress();
-				data.put(Constants.CLIENT_IP_ADDRESS.toString(), ipAddress);
-				data.put(Constants.IP_PORT.toString(), ApplicationContext.getPort());
+				message.addParam(Constants.CLIENT_IP_ADDRESS, ipAddress);
+				message.addParam(Constants.IP_PORT, ApplicationContext.getPort());
 			}
 			if(type == ConnectionType.BLUETOOTH){
 				log.info("##### Adding BLUETOOTH connection type");
 				String btNameString = AndroidContextController.getInstance().getBluetooth().getDeviceBluetoothName();
-				data.put(Constants.CLIENT_BT_ID.toString(), btNameString);
+				message.addParam(Constants.CLIENT_BT_ID, btNameString);
 			}
 		}
 		for(Client client : ClientManager.getClientsList()){
-			client.sendMessage(JSONMessage.toJson(data));
+			client.sendMessage(message.toString());
 		}
 	}
 	

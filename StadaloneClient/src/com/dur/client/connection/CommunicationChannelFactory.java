@@ -1,17 +1,15 @@
 package com.dur.client.connection;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.AndroidContextController;
 import com.dur.client.model.ApplicationContext;
-import com.dur.client.model.JSONMessage;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 import com.dur.shared.MessageTypes;
 
 import android.bluetooth.BluetoothDevice;
@@ -21,15 +19,17 @@ public class CommunicationChannelFactory {
 	
 	private final static Log log = LogFactory.getLog(CommunicationChannelFactory.class);
 	
-	public static List<CommunicationChannel> getCommunicationChannels(Map<Object, Object> params){
+	public static List<CommunicationChannel> getCommunicationChannels(JSONMessage params){
 		List<CommunicationChannel> channels = new LinkedList<>();
-		if(params.containsKey(Constants.CLIENT_IP_ADDRESS.toString())){
-			String ipAddress = (String) params.get(Constants.CLIENT_IP_ADDRESS.toString());
-			String port = (String) params.get(Constants.IP_PORT.toString());
+		if(params.hasParam(Constants.CLIENT_IP_ADDRESS)){
+			String ipAddress = (String) params.get(Constants.CLIENT_IP_ADDRESS);
+			String port = (String) params.get(Constants.IP_PORT);
 			channels.add(constructCommunicationChannel(ConnectionType.SOCKET, new String[] {ipAddress, port}));
 		}
-		if(AndroidContextController.isMobileDevice() && params.containsKey(Constants.CLIENT_BT_ID.toString())){
-			CommunicationChannel channel = constructCommunicationChannel(ConnectionType.BLUETOOTH, new String[] {(String) params.get(Constants.CLIENT_BT_ID.toString())} );
+		if(AndroidContextController.isMobileDevice() && params.hasParam(Constants.CLIENT_BT_ID)){
+			CommunicationChannel channel = constructCommunicationChannel(ConnectionType.BLUETOOTH, new String[] {
+					(String) params.get(Constants.CLIENT_BT_ID)
+			} );
 			if(channel != null){
 				channels.add(channel);
 			}
@@ -40,8 +40,10 @@ public class CommunicationChannelFactory {
 		if(null != ApplicationContext.getWebSocketCommunicationChannel()){
 			channels.add(ApplicationContext.getWebSocketCommunicationChannel());
 		}
-		if(AndroidContextController.isMobileDevice() &&  params.containsKey(Constants.CLIENT_PHONE.toString())){
-			channels.add(constructCommunicationChannel(ConnectionType.PHONE, new String[]{(String) params.get(Constants.CLIENT_PHONE.toString())} ));
+		if(AndroidContextController.isMobileDevice() &&  params.hasParam(Constants.CLIENT_PHONE)){
+			channels.add(constructCommunicationChannel(ConnectionType.PHONE, new String[]{
+					(String) params.get(Constants.CLIENT_PHONE)
+			}));
 		}
 		return channels;
 	}
@@ -78,13 +80,14 @@ public class CommunicationChannelFactory {
 	private static WebSocketCommunicationChannel getWebSocketCommunicationChannel(String address, String port){
 		if(ApplicationContext.getWebSocketCommunicationChannel() == null){
 			List<String> initialMessages = new LinkedList<>();
-			HashMap<Object, Object> data = ApplicationContext.getBusinessCard();
-			data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.REGISTER.toString());
-			initialMessages.add(JSONMessage.toJson(data));
-			data.clear();
-			data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.GET_CLIENTS.toString());
-			data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-			initialMessages.add(JSONMessage.toJson(data));
+			JSONMessage message = ApplicationContext.getBusinessCard();
+			message.addParam(Constants.REQUEST_TYPE, MessageTypes.REGISTER.toString());
+			initialMessages.add(message.toString());
+			
+			message = new JSONMessage();
+			message.addParam(Constants.REQUEST_TYPE, MessageTypes.GET_CLIENTS.toString());
+			message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+			initialMessages.add(message.toString());
 			ApplicationContext.connectToExternalServer(address, port, initialMessages);
 		}
 		return ApplicationContext.getWebSocketCommunicationChannel();

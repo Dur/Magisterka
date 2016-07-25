@@ -1,11 +1,11 @@
 package com.dur.client.model.handlers;
 
-import java.util.Map;
+import com.dur.shared.JSONMessage;
 
 public interface MessageHandler {
 	
 	public String getMessageHeader();
 	
-	public void handleMessage(Map<Object, Object> message);
+	public void handleMessage(JSONMessage message);
 
 }

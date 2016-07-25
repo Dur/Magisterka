@@ -1,14 +1,12 @@
 package com.dur.client.controllers;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.dur.client.model.JSONMessage;
 import com.dur.client.model.handlers.ChannelOffMessageHandler;
 import com.dur.client.model.handlers.ChannelOnMessageHandler;
 import com.dur.client.model.handlers.ClientsListMessageHandler;
@@ -20,6 +18,7 @@ import com.dur.client.model.handlers.RegisterMessageHandler;
 import com.dur.client.model.handlers.RegisterResponseMessageHandler;
 import com.dur.client.model.handlers.StopObservingMessageHandler;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 import com.dur.shared.MessageTypes;
 
 /**
@@ -71,8 +70,8 @@ public class MessageDispatcher implements Runnable{
 	}
 
 	private void handleMessage(String message){
-		Map<Object, Object> params = JSONMessage.parseJson(message);
-		String requestType = (String) params.get(Constants.REQUEST_TYPE.toString());
+		JSONMessage params = new JSONMessage(message);
+		String requestType = (String) params.get(Constants.REQUEST_TYPE);
 		MessageHandler handler = handlers.get(requestType);
 		if(null != handler){
 			log.info("##### Processing message: " + requestType);

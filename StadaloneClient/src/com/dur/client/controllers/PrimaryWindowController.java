@@ -2,9 +2,24 @@ package com.dur.client.controllers;
 
 import java.net.URL;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.dur.client.ClientManager;
+import com.dur.client.model.ApplicationContext;
+import com.dur.client.model.Client;
+import com.dur.client.model.Cords;
+import com.dur.client.model.Map;
+import com.dur.client.model.SimpleLocation;
+import com.dur.client.model.StaticMap;
+import com.dur.client.view.ConnectionPopupView;
+import com.dur.client.view.decorators.MapViewDecorator;
+import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
+import com.dur.shared.MessageTypes;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -25,22 +40,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 import javafx.util.Callback;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.dur.client.ClientManager;
-import com.dur.client.model.ApplicationContext;
-import com.dur.client.model.Client;
-import com.dur.client.model.Cords;
-import com.dur.client.model.JSONMessage;
-import com.dur.client.model.Map;
-import com.dur.client.model.SimpleLocation;
-import com.dur.client.model.StaticMap;
-import com.dur.client.view.ConnectionPopupView;
-import com.dur.client.view.decorators.MapViewDecorator;
-import com.dur.shared.Constants;
-import com.dur.shared.MessageTypes;
 
 public class PrimaryWindowController implements Initializable {
 	
@@ -232,18 +231,18 @@ public class PrimaryWindowController implements Initializable {
 	        	log.info("##### You selected observable client!");
 	        	log.info("##### Client is " + oldValue + " " + newValue);
             	if(null != newValue){
-					HashMap<Object, Object> data = new HashMap<>();
-					data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.GET_LOCATION.toString());
-					data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-					data.put(Constants.RECIPIENT_ID.toString(), newValue.getId());
-					String json = JSONMessage.toJson(data);
+					JSONMessage data = new JSONMessage();
+					data.addParam(Constants.REQUEST_TYPE, MessageTypes.GET_LOCATION.toString());
+					data.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+					data.addParam(Constants.RECIPIENT_ID, newValue.getId());
+					String json = data.toString();
 					log.error("##### Sending location request: " + json);
 					newValue.sendMessage(json);
 					
 					if(currentLocation != null){
-						data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.NEW_LOCATION.toString());
-						data.put(MessageTypes.NEW_LOCATION.toString(), currentLocation.getCords());
-						newValue.sendMessage(JSONMessage.toJson(data));
+						data.addParam(Constants.REQUEST_TYPE, MessageTypes.NEW_LOCATION.toString());
+						data.addParam(MessageTypes.NEW_LOCATION, currentLocation.getCords());
+						newValue.sendMessage(data.toString());
 						log.info("##### Sending location to " + newValue.getDisplayName());
 					}
 				}
@@ -252,11 +251,11 @@ public class PrimaryWindowController implements Initializable {
             		mapViewDecorator.reloadMap(myMapController);
             	}
             	if(null != oldValue){
-            		HashMap<Object, Object> data = new HashMap<>();
-					data.put(Constants.REQUEST_TYPE.toString(), MessageTypes.STOP_OBSERV.toString());
-					data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-					data.put(Constants.RECIPIENT_ID.toString(), oldValue.getId());
-					String json = JSONMessage.toJson(data);
+            		JSONMessage data = new JSONMessage();
+            		data.addParam(Constants.REQUEST_TYPE, MessageTypes.STOP_OBSERV.toString());
+            		data.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+            		data.addParam(Constants.RECIPIENT_ID, oldValue.getId());
+					String json = data.toString();
 					log.error("##### Sending stop observ request: " + json);
 					oldValue.sendMessage(json);  
             	}
@@ -342,14 +341,14 @@ public class PrimaryWindowController implements Initializable {
             	currentLocationText.setText(text);
 				if(ClientManager.getObservators() != null && ClientManager.getObservators().size() > 0){
 					log.info("##### New location will be send to " + ClientManager.getObservators().size() + " clients");
-					HashMap<Object, Object> message = new HashMap<>();
-					message.put(Constants.REQUEST_TYPE.toString(), MessageTypes.NEW_LOCATION.toString());
-					message.put(MessageTypes.NEW_LOCATION.toString(), currentLocation.getCords());
-					message.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
+					JSONMessage message = new JSONMessage();
+					message.addParam(Constants.REQUEST_TYPE, MessageTypes.NEW_LOCATION.toString());
+					message.addParam(MessageTypes.NEW_LOCATION, currentLocation.getCords());
+					message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
 					for(Client client : ClientManager.getObservators()){
 						log.info("##### Sending current location to " + client.getDisplayName());
-						message.put(Constants.RECIPIENT_ID.toString(), client.getId());
-						client.sendMessage(JSONMessage.toJson(message));
+						message.addParam(Constants.RECIPIENT_ID, client.getId());
+						client.sendMessage(message.toString());
 					}
 				}
 				else{

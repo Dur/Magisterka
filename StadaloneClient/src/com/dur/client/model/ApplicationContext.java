@@ -3,14 +3,10 @@ package com.dur.client.model;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
-
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +16,10 @@ import com.dur.client.connection.SocketReceiver;
 import com.dur.client.connection.WebSocketCommunicationChannel;
 import com.dur.client.controllers.AndroidContextController;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
+
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 
 public class ApplicationContext {
 	
@@ -122,23 +122,23 @@ public class ApplicationContext {
 		return ""+PORT;
 	}
 	
-	public static HashMap<Object, Object> getBusinessCard(){
-		HashMap<Object, Object> data = new HashMap<>();
-		data.put(Constants.SENDER_ID.toString(), ApplicationContext.getDeviceID());
-		data.put(Constants.DISPLAY_NAME, ApplicationContext.getDisplayName());
+	public static JSONMessage getBusinessCard(){
+		JSONMessage message = new JSONMessage();
+		message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
+		message.addParam(Constants.DISPLAY_NAME, ApplicationContext.getDisplayName());
 		if(AndroidContextController.isMobileDevice()){
-			data.put(Constants.CLIENT_PHONE.toString(), AndroidContextController.getCurrentDevicePhoneNumber());
+			message.addParam(Constants.CLIENT_PHONE, AndroidContextController.getCurrentDevicePhoneNumber());
 		}
 		String ipAddress = ApplicationContext.getIPAddress();
 		if(null != ipAddress){
-			data.put(Constants.CLIENT_IP_ADDRESS.toString(), ipAddress);
-			data.put(Constants.IP_PORT.toString(), "" + PORT);
+			message.addParam(Constants.CLIENT_IP_ADDRESS, ipAddress);
+			message.addParam(Constants.IP_PORT, "" + PORT);
 		}
 		if(AndroidContextController.hasBluetooth()){
 			String btNameString = AndroidContextController.getInstance().getBluetooth().getDeviceBluetoothName();
-			data.put(Constants.CLIENT_BT_ID.toString(), btNameString);
+			message.addParam(Constants.CLIENT_BT_ID, btNameString);
 		}
-		return data;
+		return message;
 		
 	}
 	

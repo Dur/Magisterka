@@ -9,6 +9,7 @@ import com.dur.client.controllers.PrimaryWindowController;
 import com.dur.client.model.Cords;
 import com.dur.client.view.PrimaryView;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 import com.dur.shared.MessageTypes;
 
 public class DrawPathMessageHandler implements MessageHandler{
@@ -19,9 +20,9 @@ public class DrawPathMessageHandler implements MessageHandler{
 	}
 
 	@Override
-	public void handleMessage(Map<Object, Object> message) {
+	public void handleMessage(JSONMessage message) {
 		@SuppressWarnings("unchecked")
-		List<Map<Object, Object>> cords = (List<Map<Object, Object>>) message.get(Constants.PATH.toString());
+		List<Map<Object, Object>> cords = (List<Map<Object, Object>>) message.get(Constants.PATH);
 		List<Cords> path = new LinkedList<>();
 		for(Map<Object, Object> single : cords){
 			String lat = (String) single.get(Constants.latitude.toString());
