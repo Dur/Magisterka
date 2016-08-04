@@ -5,6 +5,7 @@ import java.util.List;
 import com.dur.client.connection.CommunicationChannel;
 import com.dur.client.connection.CommunicationChannelManager;
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 
 public class Client {
 	
@@ -22,11 +23,13 @@ public class Client {
 	}
 	
 	public void destroy(){
-		channels.sendMessage(Constants.POISON_PILL.toString());
+		JSONMessage message = new JSONMessage();
+		message.addParam(Constants.POISON_PILL, null);
+		channels.sendMessage(message);
 		channels.destroy();
 	}
 	
-	public boolean sendMessage(String message){
+	public boolean sendMessage(JSONMessage message){
 		return channels.sendMessage(message);
 	}
 

@@ -29,7 +29,7 @@ public class RegisterMessageHandler implements MessageHandler{
 		
 		JSONMessage businessCardMap = ApplicationContext.getBusinessCard();
 		businessCardMap.addParam(Constants.REQUEST_TYPE, MessageTypes.REGISTER_RESPONSE.toString());
-		ClientManager.getClient(id).sendMessage(businessCardMap.toString());
+		ClientManager.getClient(id).sendMessage(businessCardMap);
 		PrimaryWindowController controller = (PrimaryWindowController) MainViewController.getControllerForView(PrimaryView.class);
 		if(null != controller){
 			log.info("##### Reloading clients list");

@@ -10,12 +10,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.shared.Constants;
+import com.dur.shared.JSONMessage;
 
 public class CommunicationChannelManager implements Runnable{
 	
 	private final Log log = LogFactory.getLog(CommunicationChannelManager.class);
 	private TreeSet<CommunicationChannel> channels = new TreeSet<CommunicationChannel>();
-	private BlockingQueue<String> messageQueue;
+	private BlockingQueue<JSONMessage> messageQueue;
 	
 	public CommunicationChannelManager (List<CommunicationChannel> channels){
 		this.channels.addAll(channels);
@@ -23,10 +24,10 @@ public class CommunicationChannelManager implements Runnable{
 		for(CommunicationChannel channel : this.channels){
 			log.info("##### " + channel.getClass());
 		}
-		messageQueue = new LinkedBlockingQueue<String>();
+		messageQueue = new LinkedBlockingQueue<JSONMessage>();
 	}
 	
-	public boolean sendMessage(String message){
+	public boolean sendMessage(JSONMessage message){
 		try {
 			messageQueue.put(message);
 		} 
@@ -81,10 +82,10 @@ public class CommunicationChannelManager implements Runnable{
 
 	@Override
 	public void run() {
-		String message = null;
+		JSONMessage message = null;
 		try {
 			message = messageQueue.take();
-			while( ! message.equals(Constants.POISON_PILL.toString())){
+			while( ! message.hasParam(Constants.POISON_PILL)){
 				synchronized (channels) {
 					log.info("##### Have " + channels.size() + " communication channels");
 					for(CommunicationChannel channel : channels){

@@ -77,7 +77,6 @@ public class ConnectedClientsController {
 			log.info("No such session");
 		}
 		notifyAboutNewClient(clientId);
-		
 	}
 	
 	/**

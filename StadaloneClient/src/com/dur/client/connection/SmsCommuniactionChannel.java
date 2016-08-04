@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.AndroidContextController;
+import com.dur.shared.JSONMessage;
 
 
 public class SmsCommuniactionChannel extends CommunicationChannel{
@@ -18,9 +19,9 @@ public class SmsCommuniactionChannel extends CommunicationChannel{
 	
 
 	@Override
-	public boolean sendMessage(String message) {
+	public boolean sendMessage(JSONMessage message) {
 		if(AndroidContextController.isMobileDevice()){
-			AndroidContextController.getInstance().sendSms(message, phoneNumber);
+			AndroidContextController.getInstance().sendSms(message.toString(), phoneNumber);
 			log.info("##### Sending text message to " + phoneNumber);
 			return true;
 		}

@@ -37,7 +37,7 @@ public class GetLocationMessageHandler implements MessageHandler {
 			ClientManager.addToObservators(senderID);
 			Client client = ClientManager.getClient(senderID);
 			if(null != client){
-				client.sendMessage(toSend.toString());
+				client.sendMessage(toSend);
 			}
 			else{
 				log.error("##### No such client " + senderID);

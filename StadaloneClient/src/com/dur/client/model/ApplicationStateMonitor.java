@@ -70,7 +70,7 @@ public class ApplicationStateMonitor implements Runnable{
 			message.addParam(Constants.REQUEST_TYPE, MessageTypes.CHANNEL_OFF.toString());
 			message.addParam(Constants.CHANNEL, type.toString());
 			for(Client client : ClientManager.getClientsList()){
-				client.sendMessage(message.toString());
+				client.sendMessage(message);
 			}
 		}
 	}
@@ -97,7 +97,7 @@ public class ApplicationStateMonitor implements Runnable{
 			}
 		}
 		for(Client client : ClientManager.getClientsList()){
-			client.sendMessage(message.toString());
+			client.sendMessage(message);
 		}
 	}
 	

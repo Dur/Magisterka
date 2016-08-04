@@ -164,9 +164,8 @@ public class MapViewDecorator {
 		            	message.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
 		            	message.addParam(Constants.RECIPIENT_ID, current.getId());
 		            	message.addParam(Constants.PATH, cordsList);
-						String json = message.toString();
-						log.error("##### Sending draw request: " + json);
-						current.sendMessage(json);  
+						log.error("##### Sending draw request: " + message.toString());
+						current.sendMessage(message);  
 	            	}
             	}
             }

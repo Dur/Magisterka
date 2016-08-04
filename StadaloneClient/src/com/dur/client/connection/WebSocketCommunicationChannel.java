@@ -8,6 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.java_websocket.drafts.Draft_17;
 
+import com.dur.shared.JSONMessage;
+
 public class WebSocketCommunicationChannel extends CommunicationChannel implements Runnable{
 	
 	private final Log log = LogFactory.getLog(WebSocketCommunicationChannel.class);
@@ -35,10 +37,10 @@ public class WebSocketCommunicationChannel extends CommunicationChannel implemen
 		}
 	}
 	
-	public boolean sendMessage(String message){
+	public boolean sendMessage(JSONMessage message){
 		if(client.getConnection().isOpen()){
 			log.info("##### Websocket connection is open - sending message");
-			client.send(message);
+			client.send(message.toString());
 			return true;
 		}
 		log.info("##### Websocket connection is closed. Unable to send message");

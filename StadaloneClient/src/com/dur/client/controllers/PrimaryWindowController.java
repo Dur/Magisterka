@@ -235,14 +235,13 @@ public class PrimaryWindowController implements Initializable {
 					data.addParam(Constants.REQUEST_TYPE, MessageTypes.GET_LOCATION.toString());
 					data.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
 					data.addParam(Constants.RECIPIENT_ID, newValue.getId());
-					String json = data.toString();
-					log.error("##### Sending location request: " + json);
-					newValue.sendMessage(json);
+					log.error("##### Sending location request: " + data.toString());
+					newValue.sendMessage(data);
 					
 					if(currentLocation != null){
 						data.addParam(Constants.REQUEST_TYPE, MessageTypes.NEW_LOCATION.toString());
 						data.addParam(MessageTypes.NEW_LOCATION, currentLocation.getCords());
-						newValue.sendMessage(data.toString());
+						newValue.sendMessage(data);
 						log.info("##### Sending location to " + newValue.getDisplayName());
 					}
 				}
@@ -255,9 +254,8 @@ public class PrimaryWindowController implements Initializable {
             		data.addParam(Constants.REQUEST_TYPE, MessageTypes.STOP_OBSERV.toString());
             		data.addParam(Constants.SENDER_ID, ApplicationContext.getDeviceID());
             		data.addParam(Constants.RECIPIENT_ID, oldValue.getId());
-					String json = data.toString();
-					log.error("##### Sending stop observ request: " + json);
-					oldValue.sendMessage(json);  
+					log.error("##### Sending stop observ request: " + data.toString());
+					oldValue.sendMessage(data);  
             	}
             }    
         });              
@@ -348,7 +346,7 @@ public class PrimaryWindowController implements Initializable {
 					for(Client client : ClientManager.getObservators()){
 						log.info("##### Sending current location to " + client.getDisplayName());
 						message.addParam(Constants.RECIPIENT_ID, client.getId());
-						client.sendMessage(message.toString());
+						client.sendMessage(message);
 					}
 				}
 				else{

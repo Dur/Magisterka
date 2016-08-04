@@ -200,7 +200,7 @@ public class ConnectionPopupController implements Initializable{
     		List<CommunicationChannel> channels = new LinkedList<>();
     		channels.add(channel);
     		Client temp = new Client("Temp", channels, "Temp");
-    		temp.sendMessage(data.toString());
+    		temp.sendMessage(data);
     		temp.destroy();
     	}
     	MainViewController.loadView(PrimaryView.class);

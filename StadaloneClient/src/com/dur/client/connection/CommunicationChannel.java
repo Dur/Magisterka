@@ -4,11 +4,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.controllers.MessageDispatcher;
+import com.dur.shared.JSONMessage;
 
 public abstract class CommunicationChannel implements Comparable<CommunicationChannel> {
 	
 	private final Log log = LogFactory.getLog(CommunicationChannel.class);
-	public abstract boolean sendMessage(String message);
+	public abstract boolean sendMessage(JSONMessage message);
 	private int priority;
 	
 	public CommunicationChannel(){

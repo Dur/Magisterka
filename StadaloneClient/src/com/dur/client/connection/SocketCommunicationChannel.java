@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.model.ApplicationContext;
+import com.dur.shared.JSONMessage;
 
 public class SocketCommunicationChannel extends CommunicationChannel{
 	
@@ -24,7 +25,7 @@ public class SocketCommunicationChannel extends CommunicationChannel{
 	}
 
 	@Override
-	public boolean sendMessage(String message) {
+	public boolean sendMessage(JSONMessage message) {
 		if(null == ApplicationContext.getIPAddress()){
 			log.info("##### Socket channel is not available now");
 			return false;

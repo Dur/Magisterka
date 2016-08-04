@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dur.client.model.ApplicationContext;
+import com.dur.shared.JSONMessage;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -24,10 +25,10 @@ public class BluetoothCommunicationChannel extends CommunicationChannel{
 	}
 
 	@Override
-	public boolean sendMessage(String message) {
+	public boolean sendMessage(JSONMessage message) {
 		PrintWriter out = null;
 		try {
-			log.info("##### sending message by bluetooth " + message);
+			log.info("##### sending message by bluetooth " + message.toString());
 			this.socket = device.createInsecureRfcommSocketToServiceRecord(ApplicationContext.APP_ID);
 			socket.connect();
         } 
@@ -44,8 +45,8 @@ public class BluetoothCommunicationChannel extends CommunicationChannel{
 			if(socket.isConnected()){
 				log.info("##### Bluetooth socket is up and ready");
 				out = new PrintWriter(socket.getOutputStream(), true);
-				log.info("##### Bluetooth socket sending message " + message);
-				out.println(message);
+				log.info("##### Bluetooth socket sending message " + message.toString());
+				out.println(message.toString());
 				out.close();
 				socket.close();
 				return true;
